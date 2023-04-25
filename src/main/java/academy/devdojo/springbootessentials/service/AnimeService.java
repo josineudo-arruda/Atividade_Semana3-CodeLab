@@ -2,7 +2,10 @@ package academy.devdojo.springbootessentials.service;
 
 import academy.devdojo.springbootessentials.domain.Anime;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -31,5 +34,10 @@ public class AnimeService {
         anime.setId(ThreadLocalRandom.current().nextLong(3, 10000000));
         animes.add(anime);
         return anime;
+    }
+
+
+    public void delete(long id) {
+        animes.remove(findById(id));
     }
 }
