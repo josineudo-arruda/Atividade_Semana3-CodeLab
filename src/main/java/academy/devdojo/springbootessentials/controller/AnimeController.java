@@ -1,7 +1,7 @@
-package academy.devdojo.springboot2.controller;
+package academy.devdojo.springbootessentials.controller;
 
-import academy.devdojo.springboot2.domain.Anime;
-import academy.devdojo.springboot2.util.DateUtil;
+import academy.devdojo.springbootessentials.domain.Anime;
+import academy.devdojo.springbootessentials.util.DateUtil;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +28,4 @@ public class AnimeController {
         return List.of(new Anime("BNH"), new Anime("Sailor Moon"));
     }
 
-    public List<Anime> list2() {
-        //log.info(dateUtil.formatLocalTimeToDatabaseStyle(LocalDateTime.now()));
-        return List.of(new Anime("BNH"), new Anime("Sailor Moon"), new Anime("Taylor Swift"));
-    }
 }
