@@ -1,6 +1,7 @@
 package academy.devdojo.springbootessentials.controller;
 
 import academy.devdojo.springbootessentials.domain.Anime;
+import academy.devdojo.springbootessentials.service.AnimeService;
 import academy.devdojo.springbootessentials.util.DateUtil;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -15,17 +16,18 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("anime")
+@RequestMapping("animes")
 @RequiredArgsConstructor
 public class AnimeController {
-    private DateUtil dateUtil;
+    private final DateUtil dateUtil;
+    private final AnimeService animeService;
 
     //public AnimeController(DateUtil dateUtil) {this.dateUtil = dateUtil;}
 
-    @GetMapping("list")
+    @GetMapping
     public List<Anime> list() {
         //log.info(dateUtil.formatLocalTimeToDatabaseStyle(LocalDateTime.now()));
-        return List.of(new Anime("BNH"), new Anime("Sailor Moon"));
+        return animeService.listAll();
     }
 
 }
