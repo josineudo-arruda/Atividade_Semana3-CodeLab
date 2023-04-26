@@ -1,3 +1,14 @@
 server:
   error:
     include-stacktrace: on_param
+
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/anime?useSSL=false&createDatabaseIfNotExist=true
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddlAuto: create
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
