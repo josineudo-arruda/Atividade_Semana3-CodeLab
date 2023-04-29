@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/anime?useSSL=false&createDatabaseIfNotExist=true
+    url: jdbc:postgresql://localhost:5432/anime?createDatabaseIfNotExist=true
     username: postgres
     password: postgres
   jpa:
