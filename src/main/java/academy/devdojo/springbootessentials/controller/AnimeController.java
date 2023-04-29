@@ -4,14 +4,13 @@ import academy.devdojo.springbootessentials.domain.Anime;
 import academy.devdojo.springbootessentials.requests.AnimePostRequestBody;
 import academy.devdojo.springbootessentials.requests.AnimePutRequestBody;
 import academy.devdojo.springbootessentials.service.AnimeService;
-import academy.devdojo.springbootessentials.util.DateUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @RestController
@@ -24,9 +23,8 @@ public class AnimeController {
     //public AnimeController(DateUtil dateUtil) {this.dateUtil = dateUtil;}
 
     @GetMapping
-    public ResponseEntity<List<Anime>> list() {
-        //log.info(dateUtil.formatLocalTimeToDatabaseStyle(LocalDateTime.now()));
-        return new ResponseEntity<>(animeService.listAll(), HttpStatus.OK);
+    public ResponseEntity<Page<Anime>> list(Pageable pageable) {
+        return ResponseEntity.ok(animeService.listAll(pageable));
     }
 
     @GetMapping(path = "/{id}")
