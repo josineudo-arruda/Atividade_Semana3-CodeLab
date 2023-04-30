@@ -24,14 +24,14 @@ public class SpringClient {
 
         log.info(exchange.getBody());
 
-        Anime samuraiChamploo = Anime.builder().name("Samurai Champloo").build();
+        Anime samuraiChamploo = Anime.builder().name("My Hero Academy").build();
         ResponseEntity<Anime>  samuraiChamplooSaved = new RestTemplate().exchange("http://localhost:8080/animes",
                 HttpMethod.POST,
                 new HttpEntity<>(samuraiChamploo, createJsonHeader()), Anime.class);
         log.info("saved anime {}", samuraiChamplooSaved);
 
         Anime animeToBeUpdated = samuraiChamplooSaved.getBody();
-        animeToBeUpdated.setName("Samurai Champloo 2");
+        animeToBeUpdated.setName("My Hero Academy 2");
         ResponseEntity<Void>  samuraiChamplooUpdated = new RestTemplate().exchange("http://localhost:8080/animes",
                 HttpMethod.PUT,
                 new HttpEntity<>(animeToBeUpdated, createJsonHeader()), Void.class);
