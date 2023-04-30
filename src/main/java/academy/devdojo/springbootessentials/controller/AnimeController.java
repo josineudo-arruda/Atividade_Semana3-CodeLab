@@ -10,10 +10,6 @@ import lombok.extern.log4j.Log4j2;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +21,6 @@ import java.util.List;
 @Log4j2
 @RequestMapping("animes")
 @RequiredArgsConstructor
-@EnableMethodSecurity
 public class AnimeController {
     private final DateUtil dateUtil;
     private final AnimeService animeService;
@@ -48,21 +43,12 @@ public class AnimeController {
         return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
 
-    @GetMapping(path = "by-id/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Anime> findByIdAuthenticationPrincipal(@PathVariable Long id,
-                                                                 @AuthenticationPrincipal UserDetails userDetails) {
-        log.info(userDetails);
-        return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
-    }
-
     @GetMapping(path = "/find") //find?name=name
     public ResponseEntity<List<Anime>> findByName(@RequestParam(name = "name") String name) {
         return ResponseEntity.ok(animeService.findByName(name));
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody) {
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
