@@ -55,9 +55,26 @@ class AnimeRepositoryTest {
         Assertions.assertThat(animeOptional).isEmpty();
     }
 
+    @Test
+    @DisplayName("Find By Name returns list of anime when Successful")
+    void findByName_ReturnsLisOfAnime_WhenSuccessful() {
+        Anime animeToBeSaved = createAnime();
+        Anime animeSaved =  this.animeRepository.save(animeToBeSaved);
 
+        String name =animeSaved.getName();
+        List<Anime> animes = this.animeRepository.findByName(name);
 
+        Assertions.assertThat(animes).isNotEmpty();
+        Assertions.assertThat(animes).contains(animeSaved);
+    }
 
+    @Test
+    @DisplayName("Find By Name returns empty list when no anime is found")
+    void findByName_ReturnsEmptyList_WhenAnimeIsNotFound() {
+        List<Anime> animes = this.animeRepository.findByName("xaxa");
+
+        Assertions.assertThat(animes).isEmpty();
+    }
 
     private Anime createAnime() {
         return Anime.builder()
