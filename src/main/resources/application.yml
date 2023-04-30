@@ -12,3 +12,9 @@ spring:
     hibernate:
       ddlAuto: create
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
