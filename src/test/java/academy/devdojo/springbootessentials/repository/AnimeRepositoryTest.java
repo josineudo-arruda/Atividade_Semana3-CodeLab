@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import academy.devdojo.springbootessentials.util.AnimeCreator;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save persists anime when Successful")
     void save_PersistAnime_WhenSuccessful() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime animeSaved =  this.animeRepository.save(animeToBeSaved);
         Assertions.assertThat(animeSaved).isNotNull(); // não está null
         Assertions.assertThat(animeSaved.getId()).isNotNull(); // id nulo
@@ -33,7 +34,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save update anime when Successful")
     void save_UpdatesAnime_WhenSuccessful() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime animeSaved =  this.animeRepository.save(animeToBeSaved);
 
         animeSaved.setName("Overlord");
@@ -46,7 +47,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Delete removes anime when Successful")
     void delete_RemovesAnime_WhenSuccessful() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime animeSaved =  this.animeRepository.save(animeToBeSaved);
 
         this.animeRepository.delete(animeSaved);
@@ -59,7 +60,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Find By Name returns list of anime when Successful")
     void findByName_ReturnsLisOfAnime_WhenSuccessful() {
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime animeSaved =  this.animeRepository.save(animeToBeSaved);
 
         String name =animeSaved.getName();
@@ -88,9 +89,4 @@ class AnimeRepositoryTest {
                 .withMessageContaining("The anime name cannot be empty");
     }
 
-    private Anime createAnime() {
-        return Anime.builder()
-                .name("Steven Universe")
-                .build();
-    }
 }
