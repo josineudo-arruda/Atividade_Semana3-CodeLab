@@ -38,6 +38,8 @@ public class SecurityConfig {
         http.csrf().disable()
                 //.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
                 .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/animes/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/animes/**").hasRole("USER")
                         .anyRequest().authenticated()
                         .and().authenticationManager(authenticationManager))
                 .formLogin().and().httpBasic(withDefaults());
@@ -46,7 +48,10 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        log.info("Password encode{}", encoder.encode("admin"));
+
+        return encoder;
     }
     @Bean
     public AuthenticationManager authManager(HttpSecurity http, PasswordEncoder passwordEncoder, AdminUserDetailsService adminUserDetailsService)
@@ -61,7 +66,6 @@ public class SecurityConfig {
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        log.info("Password encode{}", encoder.encode("user"));
         UserDetails user = User.withUsername("user")
                 .password(encoder.encode("user"))
                 .roles("USER")
