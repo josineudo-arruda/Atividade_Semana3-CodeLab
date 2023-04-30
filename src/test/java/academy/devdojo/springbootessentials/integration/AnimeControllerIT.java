@@ -147,6 +147,7 @@ public class AnimeControllerIT {
     void findByName_ReturnsEmptyListOfAnimes_WhenAnimeIsNotFound() {
         adminUserRepository.save(USER);
         List<Anime> animes = testRestTemplateUser.exchange("/animes/find?name=dbz", HttpMethod.GET,
+                null
                 , new ParameterizedTypeReference<List<Anime>>() {
                 }).getBody();
         Assertions.assertThat(animes)
@@ -189,7 +190,7 @@ public class AnimeControllerIT {
     @DisplayName("delete removes anime when successful")
     void delete_RemovesAnime_WhenSuccessful(){
         Anime savedAnime = animeRepository.save(AnimeCreator.createAnimeToBeSaved());
-        adminUserRepository.save(USER);
+        adminUserRepository.save(ADMIN);
         ResponseEntity<Void> animeResponseEntity = testRestTemplateAdmin.exchange("/animes/admin/{id}",
                 HttpMethod.DELETE,null, Void.class, savedAnime.getId());
         Assertions.assertThat(animeResponseEntity).isNotNull();
